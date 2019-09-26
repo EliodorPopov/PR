@@ -5,12 +5,15 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading;
 using Newtonsoft.Json.Linq;
+using System.Diagnostics;
+
 namespace PR1
 {
     class Program
     {
         public static int isDone = 0;
         public static List<string> finalResult = new List<string>();
+        public static Stopwatch watch = new Stopwatch();
         static void Main(string[] args)
         {
             Console.WriteLine("Hello World!");
@@ -21,6 +24,7 @@ namespace PR1
                 JObject json = JObject.Parse(responseBody);
                 access_token = json["access_token"].ToString();
                 Console.WriteLine("Access token: " + json["access_token"]);
+                watch.Start();
                 SendRequest("/home", access_token);
             }
             Console.ReadLine();
@@ -57,6 +61,7 @@ namespace PR1
                 SendRequest(route, access_token);
                 isDone--;
                 if(isDone == 0){
+                    watch.Stop();
                     printResponse();
                 }
             });
@@ -66,6 +71,7 @@ namespace PR1
         public static void printResponse() {
             Console.WriteLine("Done");
             finalResult.ForEach(x => Console.WriteLine(x + "\n--------------------------------"));
+            Console.Write("Process done in " + watch.Elapsed.Seconds + " seconds.");
         }
     }
 }
