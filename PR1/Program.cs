@@ -46,10 +46,10 @@ namespace PR1
                         SendRequestWithNewThred(item.First.ToString(), access_token);
                     }
                 }
-                if(jsonResponse["data"] != null){
+                if (jsonResponse["data"] != null)
+                {
                     finalResult.Add(jsonResponse["data"].ToString());
                 }
-                
             }
         }
 
@@ -60,15 +60,30 @@ namespace PR1
                 isDone++;
                 SendRequest(route, access_token);
                 isDone--;
-                if(isDone == 0){
+                if (isDone == 0)
+                {
                     watch.Stop();
                     printResponse();
                 }
             });
             thread.Start();
+
+            // Using ThreadPool takes longer
+            // ThreadPool.QueueUserWorkItem(delegate (object state)
+            // {
+            //     isDone++;
+            //     SendRequest(route, access_token);
+            //     isDone--;
+            //     if (isDone == 0)
+            //     {
+            //         watch.Stop();
+            //         printResponse();
+            //     }
+            // });
         }
 
-        public static void printResponse() {
+        public static void printResponse()
+        {
             Console.WriteLine("Done");
             finalResult.ForEach(x => Console.WriteLine(x + "\n--------------------------------"));
             Console.Write("Process done in " + watch.Elapsed.Seconds + " seconds.");
