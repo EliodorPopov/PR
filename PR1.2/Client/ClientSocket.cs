@@ -1,11 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 
 namespace Client
 {
@@ -13,7 +10,7 @@ namespace Client
     {
         private Socket clientSocket;
         private byte[] buffer;
-        private const int BUFF_SIZE = 4096;
+        private const int BUFF_SIZE = 1024;
         private string ip;
         private int port;
 
@@ -54,7 +51,7 @@ namespace Client
             {
                 try
                 { 
-                    Console.WriteLine("Connection estabilished");
+                    Console.Write("Connection estabilished\n>");
                     buffer = new byte[BUFF_SIZE];
                     clientSocket.BeginReceive(buffer, 0, buffer.Length, SocketFlags.None, ReceiveCallback, null);
                 }
@@ -77,9 +74,9 @@ namespace Client
             {
                 int buffLength = clientSocket.EndReceive(result);
                 byte[] packet = new byte[buffLength];
-                Array.Copy(buffer, packet, packet.Length);
+                Array.Copy(buffer, 2, packet, 0, packet.Length);
                 string res = Encoding.Default.GetString(packet);
-                Console.WriteLine(res);
+                Console.Write(res + "\n>");
 
                 buffer = new byte[BUFF_SIZE];
                 clientSocket.BeginReceive(buffer, 0, buffer.Length, SocketFlags.None, ReceiveCallback, null);

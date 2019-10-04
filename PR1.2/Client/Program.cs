@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Client
 {
@@ -12,9 +8,7 @@ namespace Client
         static void Main(string[] args)
         {
             socket.Connect("127.0.0.1", 9000);
-
             Console.WriteLine("/q - exit");
-            Console.WriteLine("Please enter a command");
 
             string command = "";
             while (true)

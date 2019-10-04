@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Net.Http;
-using System.Net.Http.Headers;
-using System.Threading;
 using Newtonsoft.Json.Linq;
 using System.Diagnostics;
 
@@ -11,12 +8,13 @@ namespace PR1
 {
     class Program
     {
+        public static List<FetchedDataType> fetchedResult = new List<FetchedDataType>();
         public static int isDone = 0;
         public static List<string> finalResult = new List<string>();
         public static Stopwatch watch = new Stopwatch();
+        private static ServerSocket socket = new ServerSocket();
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
             string access_token = "";
             using (var httpClient = new HttpClient())
             {
@@ -48,6 +46,7 @@ namespace PR1
                 }
                 if (jsonResponse["data"] != null)
                 {
+                    fetchedResult.Add(Helpers.GetFetchedDataType(jsonResponse));
                     finalResult.Add(jsonResponse["data"].ToString());
                 }
             }
@@ -64,6 +63,7 @@ namespace PR1
                 {
                     watch.Stop();
                     printResponse();
+                    startServer();
                 }
             });
             thread.Start();
@@ -87,6 +87,15 @@ namespace PR1
             Console.WriteLine("Done");
             finalResult.ForEach(x => Console.WriteLine(x + "\n--------------------------------"));
             Console.Write("Process done in " + watch.Elapsed.Seconds + " seconds.");
+        }
+
+        public static void startServer()
+        {
+            socket.Bind("127.0.0.1", 9000);
+            socket.Listen();
+            socket.Accept();
+            Console.WriteLine("\n\nServer started and listening");
+            Console.ReadLine();
         }
     }
 }
