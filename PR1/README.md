@@ -38,7 +38,7 @@ In the Handle method from PacketHandler i take the length of the packet which is
 For processing the command i call the Execute method from the ProcessCOmmand static class. There i split the string, verify if we have such a command and call the correct method (well there is only one correct comman 'selectcolumn'). After i receive the value as a list of strings, i reverse the process and convert the string into an array of bytes with the packet length on the first 2 positions.  
 Now about the static Helper class i had a really hard time to sit and write a method for each data type that i receive. But i did succesfuly for each data typeby using packages or writing myself everything.  
 Also here is the GetColumn method which goes through all the data and gets the items from the desired column.  
-## PR1.2 (client)
+## [PR1.2 (client)](/PR1.2/Client)
 For the Client part it's basically the same except i create a client. Firstly i've created a socket with the same parameters as the server. Then i created a connect and reconnect function that will receive the ip address and port and yep, you've guessed it , it tries connects.(also i gave the connect callback). The connect callback is similar to the server one where i call the beginrReceive method and give it a callback.  
 The callback basically converts the packet into a string and shows it on the console. Here is also the send method which has the array of bytes parameter and send the package.  
 Now the CreateMessage it basically a ConvertMessage from string to array of bytes with the first 2 bytes as the package length.  
