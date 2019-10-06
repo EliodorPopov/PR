@@ -24,7 +24,7 @@ The first one basically gets the acces toke and the route, sends the request and
 -data: List of lists of strings  
 This object i save to a global List of these types (FetchedDataType)  
 The SendRequestWithThread function receives the same parameters and it's objective is to create a new thread and call the SendRequest function.  
-I've also added a stopwatch to measure the time.  
+I've also added a stopwatch to measure the time. (18 seconds for me)
 I've tried to use the dotnet ThreadPool but seems like it takes longer with it. (I've left the code commented just in case).  
 Added a simple check to check if all the request are done and call the printResponse method. (from the name it is clear what is done).  
 Then it's time to start the server.  
