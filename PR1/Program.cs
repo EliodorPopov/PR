@@ -41,7 +41,7 @@ namespace PR1
                     JObject array = (JObject)jsonResponse["link"];
                     foreach (var item in array.Children())
                     {
-                        SendRequestWithNewThred(item.First.ToString(), access_token);
+                        SendRequestWithNewThread(item.First.ToString(), access_token);
                     }
                 }
                 if (jsonResponse["data"] != null)
@@ -52,7 +52,7 @@ namespace PR1
             }
         }
 
-        public static void SendRequestWithNewThred(string route, string access_token)
+        public static void SendRequestWithNewThread(string route, string access_token)
         {
             var thread = new System.Threading.Thread(() =>
             {
